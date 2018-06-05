@@ -32,3 +32,14 @@ For decoding, simply execute
 ```
 python NP2P_beam_decoder.py --model_prefix xxx --in_path yyy --out_path zzz --mode beam
 ```
+## Cite
+If you like our work, please cite:
+```
+@inproceedings{song2018leveraging,
+  title={Leveraging Context Information for Natural Question Generation},
+  author={Song, Linfeng and Wang, Zhiguo and Hamza, Wael and Zhang, Yue and Gildea, Daniel},
+  booktitle={Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies},
+  pages={569--574},
+  year={2018}
+}
+```
