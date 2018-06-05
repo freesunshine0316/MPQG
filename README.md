@@ -5,7 +5,7 @@ The code is developed under TensorFlow 1.4.1
 
 ## Data
 
-We release our data [here]()
+We release our data [here](https://www.cs.rochester.edu/~lsong10/downloads/nqg_data.tgz)
 
 ### Data format
 The current input data format for our system is in JSON style demonstrated with the following sample:
@@ -25,4 +25,10 @@ For model training, simply execute
 python NP2P_trainer.py --config_path config.json
 ```
 where config.json is a JSON file containing all hyperparameters.
-We attach a sample [config]() file along with our repository.
+We attach a sample [config](./config.json) file along with our repository.
+
+## Decoding
+For decoding, simply execute
+```
+python NP2P_beam_decoder.py --model_prefix xxx --in_path yyy --out_path zzz --mode beam
+```
