@@ -8,6 +8,8 @@ The code is developed under TensorFlow 1.4.1
 We release our data [here](https://www.cs.rochester.edu/~lsong10/downloads/nqg_data.tgz)
 
 ### Data format
+
+
 The current input data format for our system is in JSON style demonstrated with the following sample:
 ```
 [{"text1":"IBM is headquartered in Armonk , NY .", "annotation1": {"toks":"IBM is headquartered in Armonk , NY .", "POSs":"NNP VBZ VBN IN NNP , NNP .","NERs":"ORG O O O LOC O LOC ."},
@@ -18,6 +20,17 @@ The current input data format for our system is in JSON style demonstrated with 
 where "text1" and "annotation1" correspond to the text and rich annotations for the passage. Similarly, "text2" and "text3" correspond to the question and answer parts, respectively. 
 
 Please note that the rich annotation isn't necessary for our system, so you can simply modify the [data loading code](./src/NP2P_data_stream.py#L51) to not requiring the "annotation" fields. 
+
+
+#### Important update on data format
+
+Now annotations fields are not required in our latest system. So you can feed it with data sample like:
+```
+[{"text1":"IBM is headquartered in Armonk , NY .", 
+ {"text2":"Where is IBM located ?", 
+ {"text3":"Armonk , NY"
+}]
+```
 
 ## Training
 For model training, simply execute
