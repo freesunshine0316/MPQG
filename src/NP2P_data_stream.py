@@ -6,6 +6,7 @@ import padding_utils
 from sent_utils import QASentence
 import phrase_lattice_utils
 
+
 def read_text_file(text_file):
     lines = []
     with open(text_file, "rt") as f:
@@ -47,7 +48,6 @@ def read_all_GQA_questions(inpath, isLower=True, switch=False):
     return all_questions, max_answer_len
 
 
-
 def read_all_GenerationDatasets(inpath, isLower=True):
     with open(inpath) as dataset_file:
         dataset = json.load(dataset_file, encoding='utf-8')
@@ -59,24 +59,23 @@ def read_all_GenerationDatasets(inpath, isLower=True):
 
         text1 = instance['text1']
         if text1 == "": continue
-        annotation1 = instance['annotation1']
+        annotation1 = instance['annotation1'] if 'annotation1' in instance else None
         sent1 = QASentence(text1, annotation1, ID_num=ID_num, isLower=isLower)
 
         text2 = instance['text2']
         if text2 == "": continue
-        annotation2 = instance['annotation2']
+        annotation2 = instance['annotation2'] if 'annotation2' in instance else None
         sent2 = QASentence(text2, annotation2, ID_num=ID_num, isLower=isLower, end_sym='</s>')
         max_answer_len = max(max_answer_len, sent2.get_length()) # text2 is the sequence to be generated
-        #if sent2.get_length()>100: print(sent2.tokText)
-
 
         sent3 = None
         if instance.has_key('text3'):
             text3 = instance['text3']
-            annotation3 = instance['annotation3']
+            annotation3 = instance['annotation3'] if 'annotation3' in instance else None
             sent3 = QASentence(text3, annotation3, ID_num=ID_num, isLower=isLower)
         all_instances.append((sent1, sent2, sent3))
     return all_instances, max_answer_len
+
 
 def read_generation_datasets_from_fof(fofpath, isLower=True):
     all_paths = read_text_file(fofpath)
@@ -99,8 +98,10 @@ def collect_vocabs(all_instances):
         if sent3 is not None: sentences.append(sent3)
         for sentence in sentences:
             all_words.update(re.split("\\s+", sentence.tokText))
-            all_POSs.update(re.split("\\s+", sentence.POSs))
-            all_NERs.update(re.split("\\s+", sentence.NERs))
+            if sentence.POSs != None and sentence.POSs != []:
+                all_POSs.update(re.split("\\s+", sentence.POSs))
+            if sentence.NERs != None and sentence.NERs != []:
+                all_NERs.update(re.split("\\s+", sentence.NERs))
     all_chars = set()
     for word in all_words:
         for char in word:

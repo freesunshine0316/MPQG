@@ -67,7 +67,7 @@
     "with_word": true,
     "with_char": false,
     "with_POS": false,
-    "with_NER": true,
+    "with_NER": false,
     "POS_dim": 20,
     "NER_dim": 10,
     "char_dim": 50,
