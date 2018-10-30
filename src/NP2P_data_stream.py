@@ -57,12 +57,12 @@ def read_all_GenerationDatasets(inpath, isLower=True):
         ID_num = None
         if instance.has_key('id'): ID_num = instance['id']
 
-        text1 = instance['text1']
+        text1 = instance['annotation1']['toks'] if 'annotation1' in instance else instance['text1']
         if text1 == "": continue
         annotation1 = instance['annotation1'] if 'annotation1' in instance else None
         sent1 = QASentence(text1, annotation1, ID_num=ID_num, isLower=isLower)
 
-        text2 = instance['text2']
+        text2 = instance['annotation2']['toks'] if 'annotation2' in instance else instance['text2']
         if text2 == "": continue
         annotation2 = instance['annotation2'] if 'annotation2' in instance else None
         sent2 = QASentence(text2, annotation2, ID_num=ID_num, isLower=isLower, end_sym='</s>')
@@ -70,7 +70,7 @@ def read_all_GenerationDatasets(inpath, isLower=True):
 
         sent3 = None
         if instance.has_key('text3'):
-            text3 = instance['text3']
+            text3 = instance['annotation3']['toks'] if 'annotation3' in instance else instance['text3']
             annotation3 = instance['annotation3'] if 'annotation3' in instance else None
             sent3 = QASentence(text3, annotation3, ID_num=ID_num, isLower=isLower)
         all_instances.append((sent1, sent2, sent3))
@@ -120,9 +120,13 @@ class QADataStream(object):
                 if sent1.get_length()> options.max_passage_len: continue # remove very long passages
             if sent2.get_length() < 3: continue # filter out very short questions (len<3)
             sent1.convert2index(word_vocab, char_vocab, POS_vocab, NER_vocab, max_char_per_word=options.max_char_per_word)
+            #if len(sent1.word_idx_seq) != len(sent1.POS_idx_seq):
+            #    print '!!sent1', len(sent1.word_idx_seq), len(sent1.POS_idx_seq)
             sent2.convert2index(word_vocab, char_vocab, POS_vocab, NER_vocab, max_char_per_word=options.max_char_per_word)
             if sent3 is not None:
                 sent3.convert2index(word_vocab, char_vocab, POS_vocab, NER_vocab, max_char_per_word=options.max_char_per_word)
+                #if len(sent3.word_idx_seq) != len(sent3.POS_idx_seq):
+                #    print '!!sent3', len(sent3.word_idx_seq), len(sent3.POS_idx_seq)
 
             instances.append((sent1, sent2, sent3))
 

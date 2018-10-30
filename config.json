@@ -1,8 +1,8 @@
 {
     "train_path": "data/train_sent_pre.json",
     "test_path": "data/dev_sent_pre.json",
-    "word_vec_path": "data/vectors_prev.txt.st",
-    "suffix": "mpqg_1",
+    "word_vec_path": "data/vectors.txt.st",
+    "suffix": "mpqg_5",
     "model_dir": "logs",
     "isLower": true,
     "two_sent_inputs": true,
@@ -55,7 +55,7 @@
     "with_nn_match": false,
     "nn_match_dim": 20,
     "with_mp_cosine": true,
-    "cosine_MP_dim": 1,
+    "cosine_MP_dim": 5,
     "with_mp_euclidean": false,
     "euclidean_MP_dim": 10,
 
@@ -66,7 +66,7 @@
 
     "with_word": true,
     "with_char": false,
-    "with_POS": false,
+    "with_POS": true,
     "with_NER": false,
     "POS_dim": 20,
     "NER_dim": 10,
