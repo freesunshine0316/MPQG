@@ -260,8 +260,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_prefix', type=str, required=True, help='Prefix to the models.')
     parser.add_argument('--in_path', type=str, required=True, help='The path to the test file.')
-    parser.add_argument('--out_path', type=str, help='The path to the output file.')
-    parser.add_argument('--mode', type=str,default='pointwise', help='The path to the output file.')
+    parser.add_argument('--out_path', type=str, required=True, help='The path to the output file.')
+    parser.add_argument('--mode', type=str, required=True, help='Can be `greedy` or `beam`')
 
     args, unparsed = parser.parse_known_args()
 
@@ -305,7 +305,7 @@ if __name__ == '__main__':
 
     print('Build DataStream ... ')
     batch_size=-1
-    if mode in ['beam_search', 'beam_evaluate']: batch_size = 1
+    if mode.find('beam') >= 0: batch_size = 1
     devDataStream = NP2P_data_stream.QADataStream(testset, word_vocab, char_vocab, POS_vocab, NER_vocab, options=FLAGS,
                  isShuffle=False, isLoop=False, isSort=True, batch_size=batch_size)
     print('Number of instances in testDataStream: {}'.format(devDataStream.get_num_instance()))
