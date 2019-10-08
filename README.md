@@ -3,6 +3,10 @@ This repository contains the code for our paper [Leveraging Context Information 
 
 The code is developed under TensorFlow 1.4.1
 
+## Update about data split-1
+
+[Split-1](https://github.com/xinyadu/nqg/tree/master/data/processed) was originally released by Du et al., which we can't directly use as there is no information about answer positions. As a result, we use their provided [doclist-xxx.txt](https://github.com/xinyadu/nqg/tree/master/data) files to generate our own data (provided along this repository). We mistakenly report their train/dev/test split in our paper.
+
 ## Data
 
 We release our data [here](https://www.cs.rochester.edu/~lsong10/downloads/nqg_data.tgz)
